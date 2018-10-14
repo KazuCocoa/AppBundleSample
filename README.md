@@ -85,6 +85,17 @@ $ cat spec.json
 }
 ```
 
+Another spec.
+
+```
+{
+  "supportedAbis": ["arm64-v8a", "armeabi-v7a", "armeabi"],
+  "supportedLocales": ["en-US"],
+  "screenDensity": 420,
+  "sdkVersion": 27
+}
+```
+
 ## How to install apk
 - https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java
 
@@ -105,6 +116,61 @@ The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b281
 
 ### not for me
 We **must** change system locale before installing test APKs via `bundletool`.
-If capability has `locale/language` preference, we must re-install apk via `bundletool` if installed app has no the resource.
+~~If capability has `locale/language` preference, we must re-install apk via `bundletool` if installed app has no the resource.~~
 
 Can we install **all of resources** using `--modules` flag? We must investigate further.
+
+## Standalone directory
+We can see `standalone` directory if we build `.apks` via _bundletool_ without `--connected-device --device-id emulator-5554`. I installed one of them in a device and tried to change device lang. Then, I saw the apk includes all of device languages resources.
+
+```
+standalones/standalone-hdpi.apk
+standalones/standalone-ldpi.apk
+standalones/standalone-mdpi.apk
+standalones/standalone-tvdpi.apk
+standalones/standalone-xhdpi.apk
+standalones/standalone-xxhdpi.apk
+standalones/standalone-xxxhdpi.apk
+```
+
+But the standalones has below variation. It probably happens when we use NDK or ML related feature to optimise modules for CPU architecture, for example. In the case, we can handle them refeering `supportedAbis` in device spec.
+
+from [link](https://medium.com/mindorks/android-app-bundle-part-2-bundletool-6705b50bea4c) 
+```
+standalone-arm64_v8a_hdpi.apk 6.8M
+standalone-arm64_v8a_ldpi.apk 6.8M
+standalone-arm64_v8a_mdpi.apk 6.8M
+standalone-arm64_v8a_tvdpi.apk 6.9M
+standalone-arm64_v8a_xhdpi.apk 6.8M
+standalone-arm64_v8a_xxhdpi.apk 6.9M
+standalone-arm64_v8a_xxxhdpi.apk 6.9M
+standalone-armeabi_v7a_hdpi.apk 6.8M
+standalone-armeabi_v7a_ldpi.apk 6.8M
+standalone-armeabi_v7a_mdpi.apk 6.8M
+standalone-armeabi_v7a_tvdpi.apk 6.9M
+standalone-armeabi_v7a_xhdpi.apk 6.8M
+standalone-armeabi_v7a_xxhdpi.apk 6.9M
+standalone-armeabi_v7a_xxxhdpi.apk 6.9M
+standalone-mips_hdpi.apk 6.8M
+standalone-mips_ldpi.apk 6.8M
+standalone-mips_mdpi.apk 6.8M
+standalone-mips_tvdpi.apk 6.9M
+standalone-mips_xhdpi.apk 6.8M
+standalone-mips_xxhdpi.apk 6.9M
+standalone-mips_xxxhdpi.apk 6.9M
+standalone-x86_64_hdpi.apk 6.8M
+standalone-x86_64_ldpi.apk 6.8M
+standalone-x86_64_mdpi.apk 6.8M
+standalone-x86_64_tvdpi.apk 6.9M
+standalone-x86_64_xhdpi.apk 6.8M
+standalone-x86_64_xxhdpi.apk 6.9M
+standalone-x86_64_xxxhdpi.apk 6.9M
+standalone-x86_hdpi.apk 6.9M
+standalone-x86_ldpi.apk 6.8M
+standalone-x86_mdpi.apk 6.8M
+standalone-x86_tvdpi.apk 7.0M
+standalone-x86_xhdpi.apk 6.9M
+standalone-x86_xxhdpi.apk 6.9M
+standalone-x86_xxxhdpi.apk 6.9M
+```
+
