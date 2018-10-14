@@ -1,3 +1,12 @@
+In this repository, you can see how to run test `.aab` file with Appium. The `.aab` file is [app-bundle](https://developer.android.com/guide/app-bundle/) feature.
+`bundletool` hasn't matured yet. So, Appium haven't supported it yet. https://github.com/appium/appium-adb/pull/366
+
+So, to run tests with `.aab`, we need to follow _test.rb_ way.
+With 0.6.0, we can't put any options for `adb install` command. We can't use `-g` option, unfortunately.
+
+## Hint
+
+- https://codelabs.developers.google.com/codelabs/your-first-dynamic-app/index.html?index=..%2F..%2Fio2018#4
 
 ```
 # Build apks with https://github.com/google/bundletool/releases
@@ -19,9 +28,68 @@ $ java -jar apks/bundletool-all-0.6.0.jar install-apks \
 
 ## Run tests with appium
 1. Launch an emulator which is 8.1 and named "emulator-5554"
-2. Run below command
+2. Launch Appium server
+3. Run below command
 
 ```
 $ bundle install
 $ ruby test.rb
 ```
+
+# Deep dive
+## Lesson
+Generating `apks` for a specifit device builds `master`, language and resolution apks. When we unzip generated `AppBundleSample.apks`, we can see below apks for example. We can see application `.class` files in `base-master.apk`. English string resporces in `base-en.apk`. XXHDPI resources in `base-xxhdpi.apk`.
+
+```
+base-en.apk
+base-master.apk
+base-xxhdpi.apk
+```
+
+When we don't specify `--device-id emulator-5554`, we can see a bunch of apks in the `.apks`. Try to build without `--device-id` and unzip the result. You can see below apks.
+
+```
+ extracting: standalones/standalone-ldpi.apk  
+ extracting: standalones/standalone-tvdpi.apk  
+ extracting: standalones/standalone-mdpi.apk  
+ extracting: standalones/standalone-hdpi.apk  
+ extracting: splits/base-ldpi.apk    
+ extracting: splits/base-mdpi.apk    
+ extracting: splits/base-hdpi.apk    
+ extracting: splits/base-xhdpi.apk   
+ extracting: splits/base-xxhdpi.apk  
+ extracting: splits/base-xxxhdpi.apk  
+ extracting: splits/base-tvdpi.apk   
+ extracting: standalones/standalone-xhdpi.apk  
+ extracting: splits/base-ca.apk      
+ extracting: standalones/standalone-xxxhdpi.apk  
+ extracting: splits/base-fa.apk      
+ extracting: splits/base-da.apk      
+ extracting: splits/base-ka.apk    
+...
+```
+
+We can understand the behaviour, generating apks are for specific language/resolutions. So, if we'd like to run tests for various languages, it's good to change device languages and generate apks for it and install/run tests for it.
+
+## Get device spec
+The tool also provides `get-device-spec` command. It create below json file. As you can see, the generate command use the below specs to specify the combination of `apk`s in `apks` file. ah... good one. We can handle/manage apks from such specs.
+
+```
+$ java -jar apks/bundletool-all-0.6.0.jar get-device-spec --output spec.json
+$ cat spec.json 
+{
+  "supportedAbis": ["x86"],
+  "supportedLocales": ["en-US"],
+  "screenDensity": 420,
+  "sdkVersion": 27
+}
+```
+
+## How to install apk
+- https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java
+
+The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java#L89
+
+## Get a test apk in `.apks`
+- https://github.com/google/bundletool/blob/9a749b7445e8b654cec9dd4fbeb01f71d872c22c/src/main/java/com/android/tools/build/bundletool/commands/ExtractApksCommand.java#L135
+    - Probably, we can observe this `extractedApkPath`, we can understand which apk will be installed by `bundletool`
