@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppBundleSample</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_dashboard">ダッシュボード</string>
+    <string name="title_notifications">通知</string>
+</resources>
