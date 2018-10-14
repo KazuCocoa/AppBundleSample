@@ -1,3 +1,12 @@
+In this repository, you can see how to run test `.aab` file with Appium. The `.aab` file is [app-bundle](https://developer.android.com/guide/app-bundle/) feature.
+`bundletool` hasn't matured yet. So, Appium haven't supported it yet. https://github.com/appium/appium-adb/pull/366
+
+So, to run tests with `.aab`, we need to follow _test.rb_ way.
+With 0.6.0, we can't put any options for `adb install` command. We can't use `-g` option, unfortunately.
+
+## Hint
+
+- https://codelabs.developers.google.com/codelabs/your-first-dynamic-app/index.html?index=..%2F..%2Fio2018#4
 
 ```
 # Build apks with https://github.com/google/bundletool/releases
