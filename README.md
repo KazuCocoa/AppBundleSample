@@ -36,6 +36,7 @@ $ bundle install
 $ ruby test.rb
 ```
 
+# Deep dive
 ## Lesson
 Generating `apks` for a specifit device builds `master`, language and resolution apks. When we unzip generated `AppBundleSample.apks`, we can see below apks for example. We can see application `.class` files in `base-master.apk`. English string resporces in `base-en.apk`. XXHDPI resources in `base-xxhdpi.apk`.
 
@@ -83,3 +84,8 @@ $ cat spec.json
   "sdkVersion": 27
 }
 ```
+
+## How to install apk
+- https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java
+
+The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java#L89
