@@ -19,12 +19,13 @@ ANDROID_OPS = {
     }
 }.freeze
 
+# You can generate a proper apks for particular devices with below flags
+# --connected-device \
+# --device-id emulator-5554 \
 system <<-CMD
 java -jar apks/bundletool-all-0.6.0.jar build-apks \
   --bundle apks/release/release/app.aab \
   --output apks/AppBundleSample.apks \
-  --connected-device \
-  --device-id emulator-5554 \
   --ks apks/sign \
   --ks-key-alias key0 \
   --ks-pass pass:kazucocoa \
