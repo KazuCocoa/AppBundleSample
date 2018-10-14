@@ -89,3 +89,7 @@ $ cat spec.json
 - https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java
 
 The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b2813ce29bd6e927ad4503/src/main/java/com/android/tools/build/bundletool/device/DdmlibDevice.java#L89
+
+## Get a test apk in `.apks`
+- https://github.com/google/bundletool/blob/9a749b7445e8b654cec9dd4fbeb01f71d872c22c/src/main/java/com/android/tools/build/bundletool/commands/ExtractApksCommand.java#L135
+    - Probably, we can observe this `extractedApkPath`, we can understand which apk will be installed by `bundletool`
