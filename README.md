@@ -69,3 +69,17 @@ When we don't specify `--device-id emulator-5554`, we can see a bunch of apks in
 ```
 
 We can understand the behaviour, generating apks are for specific language/resolutions. So, if we'd like to run tests for various languages, it's good to change device languages and generate apks for it and install/run tests for it.
+
+## Get device spec
+The tool also provides `get-device-spec` command. It create below json file. As you can see, the generate command use the below specs to specify the combination of `apk`s in `apks` file. ah... good one. We can handle/manage apks from such specs.
+
+```
+$ java -jar apks/bundletool-all-0.6.0.jar get-device-spec --output spec.json
+$ cat spec.json 
+{
+  "supportedAbis": ["x86"],
+  "supportedLocales": ["en-US"],
+  "screenDensity": 420,
+  "sdkVersion": 27
+}
+```
