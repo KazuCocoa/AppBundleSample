@@ -16,3 +16,12 @@ $ java -jar apks/bundletool-all-0.6.0.jar install-apks \
   --apks apks/AppBundleSample.apks \
   --device-id emulator-5554
 ```
+
+## Run tests with appium
+1. Launch an emulator which is 8.1 and named "emulator-5554"
+2. Run below command
+
+```
+$ bundle install
+$ ruby test.rb
+```
