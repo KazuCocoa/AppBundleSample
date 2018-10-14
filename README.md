@@ -93,3 +93,18 @@ The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b281
 ## Get a test apk in `.apks`
 - https://github.com/google/bundletool/blob/9a749b7445e8b654cec9dd4fbeb01f71d872c22c/src/main/java/com/android/tools/build/bundletool/commands/ExtractApksCommand.java#L135
     - Probably, we can observe this `extractedApkPath`, we can understand which apk will be installed by `bundletool`
+
+## Multiple languages
+- `install-apks` installs `base-master.apk` and only proper language/layout resources to a particular connected devices.
+   - Even if the test apk has multiple languages resources, the install command install only one language whcih is curernt device language.
+   - If you'd like to test multiple languages, you should follow below:
+       - 1. Generate `apks` without `--connected-device --device-id emulator-5554` to build all variation's apks
+       - 2. **Change system languages to you'd like to test**
+       - 3. Run `install-apks` command to install proper resources from `.apks` file
+       - 4. Do test
+
+### not for me
+We **must** change system locale before installing test APKs via `bundletool`.
+If capability has `locale/language` preference, we must re-install apk via `bundletool` if installed app has no the resource.
+
+Can we install **all of resources** using `--modules` flag? We must investigate further.
