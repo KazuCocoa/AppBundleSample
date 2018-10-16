@@ -118,6 +118,8 @@ The above calls https://github.com/google/bundletool/blob/f855ea639a02216780b281
 We **must** change system locale before installing test APKs via `bundletool`.
 ~~If capability has `locale/language` preference, we must re-install apk via `bundletool` if installed app has no the resource.~~
 
+<img src="https://user-images.githubusercontent.com/5511591/47019117-47363c80-d191-11e8-8355-f542ca3c300a.png" width=600>
+
 Can we install **all of resources** using `--modules` flag? We must investigate further.
 
 ## Standalone directory
@@ -132,6 +134,10 @@ standalones/standalone-xhdpi.apk
 standalones/standalone-xxhdpi.apk
 standalones/standalone-xxxhdpi.apk
 ```
+
+=> Larger `apk` include smaler's reources.
+<img src="https://user-images.githubusercontent.com/5511591/47019106-3ede0180-d191-11e8-8603-baaf4bd370e6.png" width=600>
+
 
 But the standalones has below variation. It probably happens when we use NDK or ML related feature to optimise modules for CPU architecture, for example. In the case, we can handle them refeering `supportedAbis` in device spec.
 
