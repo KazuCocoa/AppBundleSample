@@ -180,3 +180,24 @@ standalone-x86_xxhdpi.apk 6.9M
 standalone-x86_xxxhdpi.apk 6.9M
 ```
 
+## Install multiple apks
+
+I didn't know, but we could install multiple apks via `install-multiple` command via `adb`.
+
+```
+app installation:
+ install [-lrtsdg] [--instant] PACKAGE
+ install-multiple [-lrtsdpg] [--instant] PACKAGE...
+     push package(s) to the device and install them
+     -l: forward lock application
+     -r: replace existing application
+     -t: allow test packages
+     -s: install application on sdcard
+     -d: allow version code downgrade (debuggable packages only)
+     -p: partial application install (install-multiple only)
+     -g: grant all runtime permissions
+     --instant: cause the app to be installed as an ephemeral install app
+ uninstall [-k] PACKAGE
+     remove this app package from the device
+     '-k': keep the data and cache directories
+```
