@@ -1,15 +1,40 @@
 require 'appium_lib_core'
 
-ANDROID_OPS = {
+ANDROID_OPS_EN = {
     caps: {
         platformName: :android,
         automationName: 'uiautomator2',
         platformVersion: '8.1',
         deviceName: 'Android Emulator',
+        app: "#{Dir.pwd}/apks/AppBundleSample.apks",
         appPackage: 'com.kazu_cocoa.appbundlesample',
         appActivity: 'com.kazu_cocoa.appbundlesample.MainActivity',
         unicodeKeyboard: true,
-        resetKeyboard: true
+        resetKeyboard: true,
+        language: "en",
+        locale: "US"
+    },
+    appium_lib: {
+        export_session: true,
+        wait: 30,
+        wait_timeout: 20,
+        wait_interval: 1
+    }
+}.freeze
+
+ANDROID_OPS_JP = {
+    caps: {
+        platformName: :android,
+        automationName: 'uiautomator2',
+        platformVersion: '8.1',
+        deviceName: 'Android Emulator',
+        app: "#{Dir.pwd}/apks/AppBundleSample.apks",
+        appPackage: 'com.kazu_cocoa.appbundlesample',
+        appActivity: 'com.kazu_cocoa.appbundlesample.MainActivity',
+        unicodeKeyboard: true,
+        resetKeyboard: true,
+        language: "ja",
+        locale: "JP"
     },
     appium_lib: {
         export_session: true,
@@ -32,16 +57,8 @@ java -jar apks/bundletool-all-0.6.0.jar build-apks \
   --overwrite
 CMD
 
-puts "Do you configure desired device environment?"
-
-system <<-CMD
-java -jar apks/bundletool-all-0.6.0.jar install-apks \
-  --apks apks/AppBundleSample.apks \
-  --device-id emulator-5554
-CMD
-
-core ||= ::Appium::Core.for(ANDROID_OPS)
-driver ||= core.start_driver
+core = ::Appium::Core.for(ANDROID_OPS_EN)
+driver = core.start_driver
 
 home_text = driver.find_element :id, "com.kazu_cocoa.appbundlesample:id/message"
 unless home_text.text == "Home"
@@ -58,4 +75,24 @@ unless dashboard_text.text == "Dashboard"
   exit
 end
 
-puts "finished"
+puts "finished EN"
+
+core = ::Appium::Core.for(ANDROID_OPS_JP)
+driver = core.start_driver
+
+home_text = driver.find_element :id, "com.kazu_cocoa.appbundlesample:id/message"
+unless home_text.text == "ホーム"
+  puts "test failed since dashboard_text.text isn't Home"
+  exit
+end
+
+dashboard = driver.find_element :id, "com.kazu_cocoa.appbundlesample:id/navigation_dashboard"
+dashboard.click
+
+dashboard_text = driver.find_element :id, "com.kazu_cocoa.appbundlesample:id/message"
+unless dashboard_text.text == "ダッシュボード"
+  puts "test failed since dashboard_text.text isn't Home"
+  exit
+end
+
+puts "finished JP"
