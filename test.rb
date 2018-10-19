@@ -12,7 +12,8 @@ ANDROID_OPS_EN = {
         unicodeKeyboard: true,
         resetKeyboard: true,
         language: "en",
-        locale: "US"
+        locale: "US",
+        fullReset: true
     },
     appium_lib: {
         export_session: true,
@@ -34,7 +35,8 @@ ANDROID_OPS_JP = {
         unicodeKeyboard: true,
         resetKeyboard: true,
         language: "ja",
-        locale: "JP"
+        locale: "JP",
+        fullReset: true
     },
     appium_lib: {
         export_session: true,
