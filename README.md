@@ -8,6 +8,10 @@ With 0.6.0, we can't put any options for `adb install` command. We can't use `-g
 
 - https://codelabs.developers.google.com/codelabs/your-first-dynamic-app/index.html?index=..%2F..%2Fio2018#4
 
+### Run with 79d95639720cf05f38bc12a29f7e9687de3fee66
+
+Work with Appium 1.9.1
+
 ```
 # Build apks with https://github.com/google/bundletool/releases
 $ java -jar apks/bundletool-all-0.6.0.jar build-apks \
@@ -26,7 +30,32 @@ $ java -jar apks/bundletool-all-0.6.0.jar install-apks \
   --device-id emulator-5554
 ```
 
-## Run tests with appium
+#### Run tests with appium
+1. Launch an emulator which is 8.1 and named "emulator-5554"
+2. Launch Appium server
+3. Run below command
+
+```
+$ bundle install
+$ ruby test.rb
+```
+
+### Run with f9a118a9407a505ef434096bf18c262c555d4985
+
+**Work with Appium 1.9.2**
+
+```
+# Build apks with https://github.com/google/bundletool/releases
+$ java -jar apks/bundletool-all-0.6.0.jar build-apks \
+  --bundle apks/release/release/app.aab \
+  --output apks/AppBundleSample.apks \
+  --ks apks/sign \
+  --ks-key-alias key0 \
+  --ks-pass pass:kazucocoa \
+  --overwrite
+```
+
+#### Run tests with appium
 1. Launch an emulator which is 8.1 and named "emulator-5554"
 2. Launch Appium server
 3. Run below command
