@@ -8,6 +8,11 @@ With 0.6.0, we can't put any options for `adb install` command. We can't use `-g
 
 - https://codelabs.developers.google.com/codelabs/your-first-dynamic-app/index.html?index=..%2F..%2Fio2018#4
 
+### Note
+
+Below worked with bundletool v 1.4.0 and Appium 1.20.2 as well.
+Then, do not forget to set the bundletool in the `PATH` with executable permission as `bundletool.jar`.
+
 ### Run with 79d95639720cf05f38bc12a29f7e9687de3fee66
 
 Work with Appium 1.9.1
@@ -31,7 +36,7 @@ $ java -jar apks/bundletool-all-0.6.0.jar install-apks \
 ```
 
 #### Run tests with appium
-1. Launch an emulator which is 8.1 and named "emulator-5554"
+1. Launch an emulator which is 10 and named "emulator-5554"
 2. Launch Appium server
 3. Run below command
 
@@ -43,7 +48,7 @@ $ ruby test.rb
 ### Run with f9a118a9407a505ef434096bf18c262c555d4985
 
 **Work with Appium 1.9.2**
-
+$ export PATH="/Users/kazuaki/GitHub/AppBundleSample/app/bundletool-all-1.4.0.jar:$PATH"
 ```
 # Build apks with https://github.com/google/bundletool/releases
 $ java -jar apks/bundletool-all-0.6.0.jar build-apks \
@@ -56,7 +61,7 @@ $ java -jar apks/bundletool-all-0.6.0.jar build-apks \
 ```
 
 #### Run tests with appium
-1. Launch an emulator which is 8.1 and named "emulator-5554"
+1. Launch an emulator which is 10 and named "emulator-5554"
 2. Launch Appium server
 3. Run below command
 
@@ -78,23 +83,23 @@ base-xxhdpi.apk
 When we don't specify `--device-id emulator-5554`, we can see a bunch of apks in the `.apks`. Try to build without `--device-id` and unzip the result. You can see below apks.
 
 ```
- extracting: standalones/standalone-ldpi.apk  
- extracting: standalones/standalone-tvdpi.apk  
- extracting: standalones/standalone-mdpi.apk  
- extracting: standalones/standalone-hdpi.apk  
- extracting: splits/base-ldpi.apk    
- extracting: splits/base-mdpi.apk    
- extracting: splits/base-hdpi.apk    
- extracting: splits/base-xhdpi.apk   
- extracting: splits/base-xxhdpi.apk  
- extracting: splits/base-xxxhdpi.apk  
- extracting: splits/base-tvdpi.apk   
- extracting: standalones/standalone-xhdpi.apk  
- extracting: splits/base-ca.apk      
- extracting: standalones/standalone-xxxhdpi.apk  
- extracting: splits/base-fa.apk      
- extracting: splits/base-da.apk      
- extracting: splits/base-ka.apk    
+ extracting: standalones/standalone-ldpi.apk
+ extracting: standalones/standalone-tvdpi.apk
+ extracting: standalones/standalone-mdpi.apk
+ extracting: standalones/standalone-hdpi.apk
+ extracting: splits/base-ldpi.apk
+ extracting: splits/base-mdpi.apk
+ extracting: splits/base-hdpi.apk
+ extracting: splits/base-xhdpi.apk
+ extracting: splits/base-xxhdpi.apk
+ extracting: splits/base-xxxhdpi.apk
+ extracting: splits/base-tvdpi.apk
+ extracting: standalones/standalone-xhdpi.apk
+ extracting: splits/base-ca.apk
+ extracting: standalones/standalone-xxxhdpi.apk
+ extracting: splits/base-fa.apk
+ extracting: splits/base-da.apk
+ extracting: splits/base-ka.apk
 ...
 ```
 
@@ -105,7 +110,7 @@ The tool also provides `get-device-spec` command. It create below json file. As 
 
 ```
 $ java -jar apks/bundletool-all-0.6.0.jar get-device-spec --output spec.json
-$ cat spec.json 
+$ cat spec.json
 {
   "supportedAbis": ["x86"],
   "supportedLocales": ["en-US"],
@@ -170,7 +175,7 @@ standalones/standalone-xxxhdpi.apk
 
 But the standalones has below variation. It probably happens when we use NDK or ML related feature to optimise modules for CPU architecture, for example. In the case, we can handle them refeering `supportedAbis` in device spec.
 
-from [link](https://medium.com/mindorks/android-app-bundle-part-2-bundletool-6705b50bea4c) 
+from [link](https://medium.com/mindorks/android-app-bundle-part-2-bundletool-6705b50bea4c)
 ```
 standalone-arm64_v8a_hdpi.apk 6.8M
 standalone-arm64_v8a_ldpi.apk 6.8M

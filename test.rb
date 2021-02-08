@@ -4,7 +4,7 @@ ANDROID_OPS_EN = {
     caps: {
         platformName: :android,
         automationName: 'uiautomator2',
-        platformVersion: '8.1',
+        platformVersion: '10',
         deviceName: 'Android Emulator',
         app: "#{Dir.pwd}/apks/AppBundleSample.apks",
         appPackage: 'com.kazu_cocoa.appbundlesample',
@@ -27,7 +27,7 @@ ANDROID_OPS_JP = {
     caps: {
         platformName: :android,
         automationName: 'uiautomator2',
-        platformVersion: '8.1',
+        platformVersion: '10',
         deviceName: 'Android Emulator',
         app: "#{Dir.pwd}/apks/AppBundleSample.apks",
         appPackage: 'com.kazu_cocoa.appbundlesample',
@@ -50,7 +50,7 @@ ANDROID_OPS_JP = {
 # --connected-device \
 # --device-id emulator-5554 \
 system <<-CMD
-java -jar apks/bundletool-all-0.6.0.jar build-apks \
+java -jar apks/bundletool-all-1.4.0.jar build-apks \
   --bundle apks/release/release/app.aab \
   --output apks/AppBundleSample.apks \
   --ks apks/sign \
