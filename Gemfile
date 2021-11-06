@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'appium_lib_core', '~> 4.3'
+gem 'appium_lib_core', '~> 5.0'
 
